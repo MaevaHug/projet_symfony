@@ -1,0 +1,40 @@
+{{form_widget(form._token)}}
+{{ form_errors(form) }}
+{{ form_row(form.name) }}
+{{ form_row(form.category) }}
+{{ form_row(form.isPrivate) }}
+
+<div>
+	<h2 class="line-decoration">Ingrédients</h2>
+	<ul id="ingredientLines" data-index="{{ form.ingredientLines|length > 0 ? form.ingredientLines|last.vars.name + 1 : 0 }}" data-prototype="{{ include('user/_ingredientLine.html.twig', {form: form.ingredientLines.vars.prototype}) |e('html_attr') }}">
+		{% for ingredientLine in form.ingredientLines %}
+			<li class="inline">
+				{{ include('user/_ingredientLine.html.twig', {form: ingredientLine} )}}
+			</li>
+		{% endfor %}
+	</ul>
+</div>
+<div class="row center">
+	<button type="button" class="btn btn-sm btn-dark btn-new round" data-collection="#ingredientLines">
+		<i class="bi bi-plus-lg"></i>
+	</button>
+</div>
+{{ form_errors(form.ingredientLines)}}
+
+
+<div>
+	<h2 class="line-decoration">Étapes</h2>
+	<ol id="stepLines" data-index="{{ form.stepLines|length > 0 ? form.stepLines|last.vars.name + 1 : 0 }}" data-prototype="{{ include('user/_stepLine.html.twig', {form: form.stepLines.vars.prototype}) |e('html_attr') }}">
+		{% for stepLine in form.stepLines %}
+			<li class="inline">
+				{{ include('user/_stepLine.html.twig', {form: stepLine} )}}
+			</li>
+		{% endfor %}
+	</ol>
+</div>
+<div class="row center">
+	<button type="button" class="btn btn-sm btn-dark btn-new round" data-collection="#stepLines">
+		<i class="bi bi-plus-lg"></i>
+	</button>
+</div>
+{{ form_errors(form.stepLines)}}

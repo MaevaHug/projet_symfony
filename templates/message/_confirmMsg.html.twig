@@ -1,0 +1,16 @@
+<div class="overlay" style="display: none">
+	{% if deleteMsg is defined %}
+		<div class="confirmMsg">
+			<h3>{{ deleteMsg }}</h3>
+			<br>
+			<div>
+				{% if element is defined %}
+					{% include 'message/_' ~ element ~'.html.twig' %}
+						<button type="button" class="btn btn-sm btn-danger round msgClose">
+							<i class="bi bi-x-lg"></i>
+						</button>
+				{% endif %}
+			</div>
+		</div>
+	{% endif %}
+</div>

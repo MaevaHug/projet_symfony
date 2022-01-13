@@ -1,0 +1,6 @@
+<form method="post" action="{{ path('admin_recipe_delete', {'id': recipe.id}) }}">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ recipe.id) }}">
+	<button class="btn btn-sm btn-success round">
+		<i class="bi bi-check-lg"></i>
+	</button>
+</form>

@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+
+	<h1>{{ title }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr class="row">
+				<th class="col-1">ID</th>
+				<th class="col-3">Nom</th>
+				<th class="col-4">Email</th>
+				<th class="col-2">Rôles</th>
+				<th class="col-2">Actions</th>
+			</tr>
+
+		</thead>
+		<tbody>
+			{% for user in users %}
+				<tr class="row">
+					{% if user_edit is defined and user.id == user_edit %}
+						<td class="col-1">{{ user.id }}</td>
+						{{form_start(form)}}
+						<td class="col-3">{{ form_row(form.username) }}</td>
+						<td class="col-4">{{ form_row(form.email) }}</td>
+						<td class="col-2">{{ form_row(form.roles) }}</td>
+						<td class="inline col-2">
+							<button type="submit" class="btn btn-sm btn-success round">
+								<i class="bi bi-check-lg"></i>
+							</button>
+							<a href="{{ path('admin_users') }}">
+								<button type="button" class="btn btn-sm btn-danger round">
+									<i class="bi bi-x-lg"></i>
+								</button>
+							</a>
+						</td>
+						{{form_end(form)}}
+
+					{% else %}
+						<td class="col-1">{{ user.id }}</td>
+						<td class="col-3">{{ user.username|e }}</td>
+						<td class="col-4">{{ user.email }}</td>
+						<td class="col-2">
+							{% for role in user.roles %}
+								{% if role == "ROLE_USER" %}
+									user
+								{% elseif role == "ROLE_ADMIN" %}
+									admin
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td class="inline col-2">
+							<a href="{{ path('admin_user_edit', {'id' : user.id}) }}" class="btn btn-sm btn-warning round">
+								<i class="bi bi-pencil-fill"></i>
+							</a>
+
+							<button type="button" class="btn btn-sm btn-danger round onDelete" {% if user.roles|length > 1 %} disabled {% endif %}>
+							<i class="bi bi-trash2-fill"></i>
+							</button>
+
+						</td>
+						{% include "message/_confirmMsg.html.twig" %}
+					{% endif %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</tbody>
+</table>{% endblock %}

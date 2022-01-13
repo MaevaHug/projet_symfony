@@ -1,0 +1,13 @@
+{
+  "build/app.css": "/build/app.css",
+  "build/app.js": "/build/app.js",
+  "build/runtime.js": "/build/runtime.js",
+  "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-b81c02.css": "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-b81c02.css",
+  "build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-b81c02.js": "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_bootstrap_dist_js_boo-b81c02.js",
+  "build/img/landscape.png": "/build/img/landscape.png",
+  "build/img/logo.svg": "/build/img/logo.svg",
+  "build/fonts/bootstrap-icons.woff?": "/build/fonts/bootstrap-icons.38c4d249.woff",
+  "build/fonts/bootstrap-icons.woff2?": "/build/fonts/bootstrap-icons.2b56e79a.woff2",
+  "build/img/logo.png": "/build/img/logo.png",
+  "build/img/logo.ico": "/build/img/logo.ico"
+}

@@ -1,0 +1,18 @@
+<div class="overlay">
+	<a href="{{ path('home') }}" class="close" id="close">
+		<i class="bi bi-x-circle-fill"></i>
+	</a>
+	<div class="popup">
+		<h1>inscription</h1>
+		{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+		{{ form_row(form.username, {'label' : 'Nom d\'utilisateur :'}) }}
+	{{ form_row(form.email, {'label' : 'Adresse email :'}) }}
+	{{ form_row(form.password, {'label' : 'Mot de passe :'}) }}
+	{{ form_errors(form.confirm_password) }}
+	{{ form_row(form.confirm_password, {'label' : 'Confirmation du mot de passe :'}) }}
+
+<a href="{{ path('security_login') }} " class="btn btn-primary">Se connecter</a>
+	<button type="submit" class="btn btn-primary">Inscription</button>
+	{{ form_end(form) }}
+</div>
+</div>

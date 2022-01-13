@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Mes recettes
+			{% endblock %}
+		</title>
+		<link
+		rel="icon" href="{{ asset('build/img/logo.ico') }}">
+		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+		{% block stylesheets %}
+			{{ encore_entry_link_tags('app') }}
+		{% endblock %}
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<!--<script src="{#{ asset('js/test.js') }#}"></script>-->
+		{% block javascripts %}
+			{{ encore_entry_script_tags('app') }}
+		{% endblock %}
+	</head>
+	<body>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="{{ path('home') }}">Mes recettes</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="navbar-collapse collapse show" id="navbarColor01">
+
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('category_list') }}">Catégories</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('recipe_list') }}">Recettes</a>
+						</li>
+						{% if is_granted('ROLE_ADMIN') %}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="{{ path('admin_recipes') }}">Recettes</a>
+									<a class="dropdown-item" href="{{ path('admin_ingredients') }}">Ingrédients</a>
+									<a class="dropdown-item" href="{{ path('admin_unities') }}">Unités de mesure</a>
+									<a class="dropdown-item" href="{{ path('admin_categories') }}">Catégories</a>
+									<a class="dropdown-item" href="{{ path('admin_users') }}">Utilisateurs</a>
+
+								</div>
+							</li>
+						{% endif %}
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user ? app.user.username : 'Mon compte' }}</a>
+							<div class="dropdown-menu">
+								{% if app.user %}
+									<a class="dropdown-item" href="{{ path('user_recipe_add') }}">Ajouter une recette</a>
+									<a class="dropdown-item" href="{{ path('user_owner_recipes') }}">Mes recettes</a>
+									<a class="dropdown-item" href="{{ path('user_liked_recipes') }}">Mes recettes favorites</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="{{ path('security_logout') }}">Déconnexion</a>
+								{% else %}
+									<a class="dropdown-item" href="{{ path('security_login') }}">Connexion</a>
+								{% endif %}
+							</div>
+						</li>
+					</ul>
+					<form class="d-flex" action="{{ path('recipe_search') }}">
+						<input class="form-control me-sm-2" 
+						type="search" 
+						placeholder="Recherche par titre ou ingrédient"
+						aria-label="Search"
+						name="f">
+						<button class="btn btn-secondary my-2 my-sm-0" type="submit">
+							<i class="bi bi-search"></i>
+						</button>
+					</form>
+				</div>
+			</div>
+		</nav>
+		{% for label, messages in app.flashes %}
+			{% for message in messages %}
+				<div class="alert alert-{{ label }}" role="alert">
+					{{ message }}
+					<button type="button" class="flashClose">
+						<i class="bi bi-x"></i>
+					</button>
+				</div>
+			{% endfor %}
+		{% endfor %}
+
+		<div class="container body-content"> {% block body %}{% endblock %}
+			</div>
+		</body>
+	</html>
+</body></html>

@@ -1,0 +1,27 @@
+<div class="overlay">
+	<a href="{{ path('home') }}" class="close" id="close">
+		<i class="bi bi-x-circle-fill"></i>
+	</a>
+	<div class="popup">
+		<h1>Connexion</h1>
+		{% if error %}
+			<div class="alert alert-danger">
+				{{ error.messageKey | trans(error.messageData, 'security')}}
+			</div>
+		{% endif %}
+
+		<form action="{{ path('security_login') }}" method="post">
+			<div class="form-group">
+				<input type="text" placeholder="Email" required name="_username" value="{{ last_username }}" class="form-control">
+			</div>
+			<div class="form-group">
+				<input type="password" placeholder="Mot de passe" required name="_password" class="form-control">
+			</div>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<div class="form-group">
+				<button type="submit" class="btn btn-success">Se connecter</button>
+				<a href="{{ path('security_registration') }} " class="btn btn-primary">Créer un compte</a>
+			</div>
+		</div>
+	</div>
+</form>

@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<h1 class="center">{{ title }}
+				{{recipe.name}}</h1>
+			<div class="col-12">
+				{{ form_start(form) }}
+				{{ include("user/_form.html.twig", {form: form})}}
+				<div class="btn-valid center">
+					<button type="submit" class="btn btn-sm btn-success round"><i class="bi bi-check-lg"></i></button>
+					<a href="{{ path('recipe_show', {'slug' : recipe.slug}) }}">
+						<button type="button" class="btn btn-sm btn-danger round"><i class="bi bi-x-lg"></i></button>
+					</a>
+				</div>
+				{{ form_end(form, {render_rest: false}) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

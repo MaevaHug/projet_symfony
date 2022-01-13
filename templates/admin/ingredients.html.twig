@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+
+	<h1>{{ title }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr class="row">
+				<th class="col-2">Pfx</th>
+				<th class="col-3">Ingrédient</th>
+				<th class="col-3">Pluriel</th>
+				<th class="col-1">recettes concernées</th>
+				<th class="inline col-3">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for ingredient in ingredients %}
+				<tr class="row">
+					{% if ingredient_edit is defined and ingredient.id == ingredient_edit %}
+						{{form_start(form)}}
+						<td class="col-2">
+							{{ form_row(form.prefix) }}</td>
+						<td class="col-3">
+							{{ form_row(form.name) }}
+						</td>
+						<td class="col-3">{{ form_row(form.plural) }}</td>
+						<td class="col-1">{{ ingredient.ingredientLines|length}}</td>
+						<td class="inline col-3">
+							<button type="submit" class="btn btn-sm btn-success round">
+								<i class="bi bi-check-lg"></i>
+							</button>
+							<a href="{{ path('admin_ingredients') }}">
+								<button type="button" class="btn btn-sm btn-danger round">
+									<i class="bi bi-x-lg"></i>
+								</button>
+							</a>
+							{{form_end(form)}}
+						</td>
+
+					{% else %}
+						<td class="col-2">{{ ingredient.prefix }}</td>
+						<td class="col-3">
+							{{ ingredient.name }}
+						</td>
+						<td class="col-3">{{ ingredient.plural }}</td>
+						<td class="col-1">{{ ingredient.ingredientLines|length}}</td>
+						<td class="inline col-3">
+							<a href="{{ path('admin_ingredient_edit', {'id' : ingredient.id}) }}" class="btn btn-sm btn-warning round">
+								<i class="bi bi-pencil-fill"></i>
+							</a>
+							<button type="button" class="btn btn-sm btn-danger round onDelete" {% if ingredient.ingredientLines|length != 0 %} disabled {% endif %}>
+							<i class="bi bi-trash2-fill"></i>
+							</button>
+						</td>
+						{% include "message/_confirmMsg.html.twig" %}
+
+					{% endif %}
+				</tr>
+			{% endfor %}
+			{% if action is defined and action == 'new'%}
+				<tr class="row">
+					<td class="col-2">
+						{{ form_start(form) }}
+						{{ form_row(form.prefix) }}
+					</td>
+					<td class="col-3">
+						{{ form_row(form.name) }}
+					</td>
+					<td class="col-3">
+						{{ form_row(form.plural) }}
+					</td>
+					<td class="col-1"></td>
+					<td class="inline col-3">
+						<button type="submit" class="btn btn-sm btn-success round">
+							<i class="bi bi-check-lg"></i>
+						</button>
+						<a href="{{ path('admin_ingredients') }}">
+							<button type="button" class="btn btn-sm btn-danger round">
+								<i class="bi bi-x-lg"></i>
+							</button>
+						</a>
+						{{form_end(form)}}
+					</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+	<div class="row center">
+		<a href=" {{ path('admin_ingredient_add') }}" class="btn btn-sm btn-dark btn-new-admin round">
+			<i class="bi bi-plus-lg"></i>
+		</a>
+	</div>
+
+	
+	
+{% endblock %}

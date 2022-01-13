@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{title}}
+{% endblock %}
+
+{% block body %}
+	<h1>{{title}}
+		{{ (filter is defined) ? filter : '' }}</h1>
+	<section class="row recipes ">
+		{%  if recipes|length == 0 %}
+			<p>Aucun résultat associé à votre recherche</p>
+		{% else %}
+			{% for recipe in recipes %}
+				{% if recipe.isPrivate == false or (app.user and recipe.author.username is same as(app.user.username)) %}
+					<div class="recipe-container col-lg-4 col-sm-6 col-12">
+						<div class="row">
+							<div class="col-10">
+								<a style="display:block" href="{{ path('recipe_show', {'slug' : recipe.slug}) }}">
+									<div class="recipe">
+										<h2>{{recipe.name|e}}</h2>
+										<p>Par:
+											{{ recipe.author.username|e}}
+											<br>
+										</p>
+									</div>
+								</a>
+							</div>
+							<div class="like-container col">
+								<a href="{{ path('user_recipe_like', {'id' : recipe.id }) }}" class="btn btn-link js-like">
+									{% if app.user and recipe.isLikedByUser(app.user) %}
+										<i class="bi bi-heart-fill"></i>
+									{% elseif app.user %}
+										<i class="bi bi-heart"></i>
+									{% endif %}
+								</a>
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		{% endif %}
+	</section>
+	{% set queryParams = app.request.query.all %}
+	{% set queryString = queryParams|filter((v, k) => k != "page")|url_encode %}
+
+	<ul class="pagination center">
+		{% if total is defined and total != 0 %}
+			<a href="?page={{ page - 1}}&{{queryString}}" class="btn btn-sm btn-dark round {{ (page == 1) ? 'disabled' : ''}}">
+				<i class="bi bi-arrow-left"></i>
+			</a>
+			{% set pages = (total / limit)|round(0, 'ceil') %}
+			{% for item in 1..pages %}
+				<li class="{{ (page == item) ? 'active' : '' }}">
+					<a href="?page={{ item }}&{{queryString}}" class="{{ (page == item) ? 'disabled' : '' }}">{{ item }}</a>
+				</li>
+			{% endfor %}
+			<a href="?page={{ page + 1}}&{{queryString}}" class="btn btn-sm btn-dark round {{ (page == pages) ? 'disabled' : ''}}">
+				<i class="bi bi-arrow-right"></i>
+			</a>
+		{% endif %}
+	</ul>
+{% endblock %}

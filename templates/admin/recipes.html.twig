@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ title }}
+{% endblock %}
+
+{% block body %}
+
+	<h1>{{ title }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr class="row">
+				<th class="col-5">Titre</th>
+				<th class="col-2">Auteur</th>
+                <th class="col-2">Date de création</th>
+				<th class="inline col-3">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for recipe in recipes %}
+				<tr class="row">
+						<td class="col-5">
+							{{ recipe.name|e }}
+						</td>
+                        <td class="col-2">{{ recipe.author.username|e }}</td>
+						<td class="col-2">{{ recipe.createdAt|date('d/m/Y') }}</td>
+						<td class="inline col-3">
+							<button type="button" class="btn btn-sm btn-danger round onDelete">
+								<i class="bi bi-trash2-fill"></i>
+							</button>
+						</td>
+						{% include "message/_confirmMsg.html.twig" %}
+				</tr>
+			{% endfor %}
+			{% if action is defined and action == 'new'%}
+				<tr class="row">
+					<td class="col-5">
+						{{ form_start(form) }}
+						{{ form_row(form.name) }}
+					</td>
+					<td class="col-2"></td>
+					<td class="inline col-3">
+						<button type="submit" class="btn btn-sm btn-success round">
+							<i class="bi bi-check-lg"></i>
+						</button>
+						<a href="{{ path('admin_categories') }}">
+							<button type="button" class="btn btn-sm btn-danger round">
+								<i class="bi bi-x-lg"></i>
+							</button>
+						</a>
+						{{form_end(form)}}
+					</td>
+				</tr>
+			{% endif %}
+		</tbody>
+	</table>
+
+{% endblock %}
